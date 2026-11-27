@@ -1,5 +1,6 @@
-const screen = document.querySelector('.journey canvas');
-const ctx = screen.getContext('2d');
+(() => {
+const journeyCanvas = document.querySelector('.journey canvas');
+const ctx = journeyCanvas.getContext('2d');
 const control = document.querySelector('#travel');
 const ink = '#263f32', shade = '#5b7651', grass = '#a6bf82', light = '#dce8b6';
 let progress = 0, moving = false, previous = 0;
@@ -68,3 +69,10 @@ control.addEventListener('click',()=>{
   if(moving)requestAnimationFrame(frame);
 });
 paint();
+
+if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  moving = true;
+  control.textContent = 'Pause Ⅱ';
+  requestAnimationFrame(frame);
+}
+})();
