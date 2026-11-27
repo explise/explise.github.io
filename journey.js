@@ -115,9 +115,23 @@
   }
   let elapsed=0,prior=0,id=0,playing=false;
   function tick(now){if(prior)elapsed+=Math.min(80,now-prior)/1000;prior=now;draw(elapsed);
-    if(elapsed>=15){button.textContent='Replay walk ↻';if(matchMedia('(prefers-reduced-motion: reduce)').matches){playing=false;return;}}id=requestAnimationFrame(tick);}
-  function toggle(){if(elapsed>=15){cancelAnimationFrame(id);elapsed=0;playing=false;}if(playing){cancelAnimationFrame(id);playing=false;button.textContent='Continue ▸';return;}
-    if(elapsed>=24)elapsed=0;prior=0;playing=true;button.textContent='Pause Ⅱ';id=requestAnimationFrame(tick);}
+    if(elapsed>=15){button.setAttribute('aria-label','Replay walk ↻');if(matchMedia('(prefers-reduced-motion: reduce)').matches){playing=false;return;}}id=requestAnimationFrame(tick);}
+  function toggle(){if(elapsed>=15){cancelAnimationFrame(id);elapsed=0;playing=false;}if(playing){cancelAnimationFrame(id);playing=false;button.setAttribute('aria-label','Continue ▸');return;}
+    if(elapsed>=24)elapsed=0;prior=0;playing=true;button.setAttribute('aria-label','Pause Ⅱ');id=requestAnimationFrame(tick);}
+  document.querySelectorAll('.journey [data-action]').forEach(key => {
+    key.addEventListener('click', () => {
+      const action = key.dataset.action;
+      if (action === 'play') { if (!playing || elapsed >= 15) toggle(); return; }
+      if (action === 'restart') {
+        cancelAnimationFrame(id); playing = false; elapsed = 0; toggle(); return;
+      }
+      cancelAnimationFrame(id); playing = false; prior = 0;
+      if (action === 'back') elapsed = Math.max(0, Math.min(15,elapsed) - 1);
+      if (action === 'forward') elapsed = Math.min(15, elapsed + 1);
+      draw(elapsed);
+      button.setAttribute('aria-label', elapsed >= 15 ? 'Replay journey' : 'Continue journey');
+    });
+  });
   button.addEventListener('click',toggle);draw(0);
   if(!matchMedia('(prefers-reduced-motion: reduce)').matches)toggle();
 })();
