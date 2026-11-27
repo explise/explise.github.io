@@ -34,29 +34,11 @@ summary{cursor:pointer;list-style:none}summary::-webkit-details-marker{display:n
 .prompt{font-size:11px;letter-spacing:.17em;bottom:9%}
 @media(max-width:650px){.lcd{border-width:7px;border-radius:17px 17px 33px 17px}.moon{top:13%}.sprites{top:44%}.ground{top:70%}.prompt{bottom:7%}}
 @media(prefers-reduced-motion:reduce){.spark{display:none}}
-</style></head><body>
+.journey{position:relative;overflow:hidden;background:#b9cc8b;border:8px solid #424b3c;border-radius:16px 16px 34px 16px;box-shadow:0 3px #29382c}.journey canvas{width:100%;display:block;image-rendering:pixelated}.journey button{position:absolute;bottom:7%;left:50%;transform:translateX(-50%);font:bold 12px monospace;background:#dce8b6;color:#243e31;border:2px solid currentColor;padding:7px 13px;white-space:nowrap;cursor:pointer}.journey button:focus-visible{outline:3px solid white;outline-offset:2px}</style></head><body>
 <header><strong>Anurag Bhatt</strong><nav aria-label="Primary"><a href="#work">Work</a><a href="Anurag_Bhatt.pdf" download>Résumé ↓</a><details name="navigation"><summary>Writeups ▾</summary><div class="menu"><a class="note" href="https://github.com/explise/verdigris/blob/main/bench/results/RESULTS.md">Finding the ingest bottleneck in Verdigris ↗</a></div></details><details name="navigation"><summary>Security research ▾</summary><div class="menu"><a href="https://bugcrowd.com/h/notmydaytoday">Bugcrowd Hall of Fame ↗</a><div class="brands"><span><img src="assets/clickhouse.svg" alt="">ClickHouse</span><span><img src="assets/binance.svg" alt="">Binance</span><span><img src="assets/settle.jpg" alt="">Settle</span></div><a href="https://hackerone.com/notmydaytoday?type=user">HackerOne credits ↗</a><div class="brands"><span><img src="assets/weblate.svg" alt="">Weblate</span></div></div></details><a href="https://github.com/explise">GitHub ↗</a></nav></header>
-<main><section class="hero"><div class="intro"><h1>Hey, I’m<br> <em>Anurag.</em></h1><p>I started programming at 12 in 2015, tinkering with Nintendo games and old Nokia phones. I’ve liked working close to the hardware ever since.</p><p>At LambdaTest, I worked on native libraries for Android and iOS. These days I do Android security research and contribute to databases and other systems through open source and bug bounty programs.</p></div><button type="button" class="lcd" aria-label="Wake the sleepy bug" aria-pressed="false"><span class="starfield" aria-hidden="true"></span><span class="moon" aria-hidden="true"></span><span class="ground" aria-hidden="true"></span><span class="spark" aria-hidden="true"></span><span class="sprites" aria-hidden="true"><span class="bug sprite"></span><span class="phone sprite"></span><span class="dream">z z</span></span><span class="prompt" aria-hidden="true">▶ PRESS START</span></button></section>
+<main><section class="hero"><div class="intro"><h1>Hey, I’m<br> <em>Anurag.</em></h1><p>I started programming at 12 in 2015, tinkering with Nintendo games and old Nokia phones. I’ve liked working close to the hardware ever since.</p><p>At LambdaTest, I worked on native libraries for Android and iOS. These days I do Android security research and contribute to databases and other systems through open source and bug bounty programs.</p></div><div class="journey"><canvas width="192" height="128" aria-label="A pixel bug travels along a woodland trail to a campsite"></canvas><button type="button" id="travel">Start journey ▸</button></div></section>
 
 <section id="work" aria-label="Selected work"><a class="entry" href="https://github.com/explise/verdigris"><strong>Verdigris</strong><span>Rust log engine for S3 ↗</span></a><div class="entry"><strong>TestMu AI</strong><span>On-device accessibility apps using Android’s AccessibilityService and Apple’s XCTest</span></div><a class="entry" href="https://github.com/apache/iggy/pull/3207"><strong>Apache Iggy</strong><span>Consumer-group tests over QUIC ↗</span></a></section>
 
 </main>
-<footer><span>Working on something I could help with?</span><a href="https://www.linkedin.com/in/bh-anurag">Get in touch ↗</a></footer><script>const menus = document.querySelectorAll('nav details'); document.addEventListener('click', event => { for (const menu of menus) if (!menu.contains(event.target)) menu.open = false; }); document.addEventListener('keydown', event => { if (event.key === 'Escape') for (const menu of menus) if (menu.open) { menu.open = false; menu.querySelector('summary').focus(); } });</script><script>
-const lcd = document.querySelector('.lcd');
-lcd.addEventListener('pointermove', event => {
-  if (event.pointerType !== 'mouse') return;
-  const bounds = lcd.getBoundingClientRect();
-  const snap = value => Math.round(value / 6) * 6 + 'px';
-  lcd.style.setProperty('--sx', snap(event.clientX - bounds.left - lcd.clientLeft));
-  lcd.style.setProperty('--sy', snap(event.clientY - bounds.top - lcd.clientTop));
-});
-lcd.addEventListener('pointerleave', () => {
-  lcd.style.removeProperty('--sx');
-  lcd.style.removeProperty('--sy');
-});
-lcd.addEventListener('click', () => {
-  const awake = lcd.getAttribute('aria-pressed') !== 'true';
-  lcd.setAttribute('aria-pressed', String(awake));
-  lcd.querySelector('.prompt').textContent = awake ? 'Ⅱ REST' : '▶ PRESS START';
-});
-</script></body></html>
+<footer><span>Working on something I could help with?</span><a href="https://www.linkedin.com/in/bh-anurag">Get in touch ↗</a></footer><script>const menus = document.querySelectorAll('nav details'); document.addEventListener('click', event => { for (const menu of menus) if (!menu.contains(event.target)) menu.open = false; }); document.addEventListener('keydown', event => { if (event.key === 'Escape') for (const menu of menus) if (menu.open) { menu.open = false; menu.querySelector('summary').focus(); } });</script><script src="journey.js"></script></body></html>
