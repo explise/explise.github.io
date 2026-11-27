@@ -59,7 +59,9 @@
   }
   function draw(t){
     const walk=Math.min(1,Math.max(0,(t-2.8)/11));
-    const wx=52+Math.round(walk*340);
+    const steps=walk*21;
+    const phase=steps%1;
+    const wx=52+16*Math.floor(steps)+Math.min(16,Math.floor(phase*20));
     const camera=Math.max(0,wx-85);
     const emerge=Math.max(0,Math.min(1,(t-.85)/1.95));
     const wy=Math.round(62+(pathY(wx)-62)*emerge);
@@ -75,6 +77,7 @@
     }
     for(let x=-10;x<560;x+=19) tree(x,23+(x+10)%8,1);
     for(let x=110;x<540;x+=21)tree(x,41+(x%17),1);
+    house(108,52,0);
     house(24,65,Math.max(0,Math.min(1,(t-.65)*2,(3.3-t)*2)));
     for(let x=3;x<102;x+=8){if(x>40&&x<66)continue;box(x,72,9,2,soil);box(x,69,3,8,'#725f4e');box(x,69,2,2,sun);}
     for(let y=0;y<153;y++){const x=217+Math.round(4*Math.sin(y/15));box(x-2,y,27,1,'#627b62');box(x,y,23,1,'#73a7a1');if(y%6===0)box(x+2+(Math.floor(t*2)+y)%13,y,5,1,'#b2d2bd');}
@@ -91,6 +94,9 @@
     if(t<2.8){g.beginPath();g.rect(wx-8,48,16,Math.max(0,wy-48+4));g.clip();}
     if(t>=.85){
     box(wx-5,wy+1,12,2,'#89966e');
+    if(t<3.1){
+      tile(wx-7,wy-18-bob,['    iiiiii    ','   iaaaaaai   ','  ialllaaaai  ','  iaaaaaaaai  ',' iihhhhhhhhii ','  ihsssssshi  ','  issississi  ','   issssssi   ','    ihhhhi    ','   iibbbcii   ','  isicccciisi ','  iiicccciii  ','    ibbbbi    ','    ittiti    '],{i:ink,a:'#ae654a',l:'#f1be7f',h:'#775440',s:'#efc89b',b:soil,c:'#568c83',t:pine});
+    }else
     tile(wx-5,wy-17-bob,['   iiii    ','  iaaaai   ',' iaaaaaai  ','iaaallaaai ',' iiiiiissi ','  ihssissi ','  ihssssi  ','   ihhii   ','  ibbbci   ',' ibbblcci  ',' ibbbcisi  ',' iibbcisi  ','  icccii   ','  iiiiii   ','  ittiti   '],{i:ink,a:'#ad604c',l:'#e9b77c',s:'#e2be90',h:'#795e48',b:'#a68054',c:'#64857b',t:'#526660'});
     box(wx-3,wy-2+bob,3,3,ink);box(wx+1,wy-1-bob,3,3,ink);
     }
@@ -98,6 +104,14 @@
     for(let x=-15;x<560;x+=25)tree(x,151+(x+15)%12,1.2);
     if(t>13.8){tile(wx+7,wy-27,[' rr rr ','rrrrrrr',' rrrrr ','  rrr  ','   r   '],{r:'#b85f70'});}
     g.restore();
+    const words=t<2.5?'A morning in Fernwick.':t>13.8?'The moths found the lilies first.':'';
+    if(words){
+      box(5,127,214,21,ink);box(7,129,210,17,'#fbf0d2');
+      box(9,131,206,13,ink);box(10,132,204,11,'#fbf0d2');
+      g.font='bold 8px monospace';g.fillStyle=ink;
+      const letters=Math.floor((t<2.5?t:t-13.8)*28);
+      g.fillText(words.slice(0,letters),15,141);
+    }
   }
   let elapsed=0,prior=0,id=0,playing=false;
   function tick(now){if(prior)elapsed+=Math.min(80,now-prior)/1000;prior=now;draw(elapsed);
